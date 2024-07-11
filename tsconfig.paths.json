@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"baseUrl": "src",
+		"paths": {
+			"@base/*": ["*"],
+			"@shared/*": ["shared/*"],
+			"@modules/*": ["modules/*"]
+		}
+	}
+}

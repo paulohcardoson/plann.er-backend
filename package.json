@@ -1,0 +1,39 @@
+{
+	"name": "plann.er",
+	"version": "0.0.1",
+	"main": "index.js",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"dev:server": "tsnd -r tsconfig-paths/register --clear --inspect --transpile-only --ignore-watch node_modules --env-file=.env.development src/shared/infra/http/server.ts"
+	},
+	"dependencies": {
+		"@fastify/cors": "^9.0.1",
+		"dayjs": "^1.11.11",
+		"dotenv": "^16.4.5",
+		"fastify": "^4.28.1",
+		"fastify-type-provider-zod": "^2.0.0",
+		"handlebars": "^4.7.8",
+		"pg": "^8.12.0",
+		"reflect-metadata": "^0.2.2",
+		"tsyringe": "^4.8.0",
+		"typeorm": "^0.3.20",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@eslint/create-config": "^0.4.6",
+		"@types/node": "^20.14.10",
+		"@types/nodemailer": "^6.4.15",
+		"@typescript-eslint/eslint-plugin": "^7.16.0",
+		"@typescript-eslint/parser": "^7.16.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"nodemailer": "^6.9.14",
+		"prettier": "^3.3.2",
+		"ts-node": "^10.9.2",
+		"ts-node-dev": "^1.1.8",
+		"tsconfig-paths": "^4.2.0",
+		"typescript": ">=4.8.0 <6",
+		"typescript-eslint": "^7.16.0"
+	}
+}
