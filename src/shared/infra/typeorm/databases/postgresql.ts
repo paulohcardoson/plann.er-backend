@@ -10,8 +10,8 @@ const PostgreSQLDataSource = new DataSource({
 	type: "postgres",
 	url: env.POSTGRESQL_URL,
 	entities: [Trip, Participant, Activity, Link],
-	//logging: true,
-	//synchronize: true,
+	logging: true,
+	synchronize: true,
 });
 
 export default PostgreSQLDataSource;

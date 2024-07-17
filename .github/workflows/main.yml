@@ -1,0 +1,50 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.3
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build project
+        run: yarn build
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: List files
+        run: ls -al
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "*,!node_modules"
+          target: ${{ secrets.TARGET_PATH }}
+
+      - name: Install dependencies and restart PM2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ${{ secrets.TARGET_PATH }}
+            yarn
+            yarn build
+            pm2 restart plann.er-api
