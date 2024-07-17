@@ -19,30 +19,24 @@ jobs:
 
       - name: Build project
         run: yarn build
-  deploy:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: List files
-        run: ls -al
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "*,!node_modules"
           target: ${{ secrets.TARGET_PATH }}
 
       - name: Install dependencies and restart PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.TARGET_PATH }}
             yarn
